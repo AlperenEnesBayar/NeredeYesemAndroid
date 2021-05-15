@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginPage">
+
+    <Button
+        android:id="@+id/bt_goto_register_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/firm_primary"
+        android:onClick="goto_regsiter_onClick"
+        android:text="Don't have an account yet?  Sign Up"
+        app:backgroundTint="@color/firm_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_logo_login"
+        android:layout_width="0dp"
+        android:layout_height="500px"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toTopOf="@+id/bt_goto_register_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999"
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/et_email_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_email_icom"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="enesalperenbayar@gmail.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo_login" />
+
+    <EditText
+        android:id="@+id/et_password_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_password_icon"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="alp123"
+        app:layout_constraintEnd_toEndOf="@+id/et_email_login"
+        app:layout_constraintStart_toStartOf="@+id/et_email_login"
+        app:layout_constraintTop_toBottomOf="@+id/et_email_login" />
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/firm_primary"
+        android:onClick="login_onClick"
+        android:text="Login"
+        app:backgroundTint="@color/firm_primary"
+        app:layout_constraintEnd_toEndOf="@+id/et_password_login"
+        app:layout_constraintStart_toStartOf="@+id/et_password_login"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_login" />
+</androidx.constraintlayout.widget.ConstraintLayout>
