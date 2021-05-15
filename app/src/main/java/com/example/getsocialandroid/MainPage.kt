@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.getsocialandroid.cards.Rest
@@ -14,9 +15,13 @@ import com.example.getsocialandroid.cards.RestAdapter
 import com.example.getsocialandroid.fragments.HomeFragment
 import com.example.getsocialandroid.fragments.ProfileFragment
 import com.example.getsocialandroid.fragments.RestFragment
+import com.example.getsocialandroid.localdb.LocalViewModel
+import com.example.getsocialandroid.localdb.RestDb
+import com.example.getsocialandroid.localdb.User
 import com.example.getsocialandroid.model.getRestParams
 import com.example.getsocialandroid.repository.Repository
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 
 class MainPage : AppCompatActivity(),
         RestAdapter.OnItemClickListener {
@@ -118,14 +123,32 @@ class MainPage : AppCompatActivity(),
     fun fav_onClick(view: View)
     {
         val bt = findViewById<ImageButton>(R.id.bt_fav_rf)
-        if (current_rest.fav) {bt.setImageResource(R.drawable.ic_fav_emp) }
-        else{bt.setImageResource(R.drawable.ic_fav)}
+        if (current_rest.fav) {
+            bt.setImageResource(R.drawable.ic_fav_emp)
+        }
+        else
+        {
+            bt.setImageResource(R.drawable.ic_fav)
+
+            //Add user the local database
+            val userViewModel: LocalViewModel = ViewModelProvider(this).get(LocalViewModel::class.java)
+            lifecycleScope.launch {
+                userViewModel.addRest(RestDb(0,current_rest.restaurant_id))
+            }
+
+        }
         current_rest.fav = current_rest.fav.not()
+
+
     }
 
     fun getStateCode(sc: String)
     {
         state_code = sc
+    }
+
+    fun getEmail(): String {
+        return intent.getStringExtra("response_email").toString()
     }
 }
 

@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.getsocialandroid.localdb.LocalViewModel
+import com.example.getsocialandroid.localdb.User
 import com.example.getsocialandroid.model.LoginParams
 import com.example.getsocialandroid.repository.Repository
 
@@ -49,9 +51,16 @@ class LoginPage : AppCompatActivity()
                         login_button.isEnabled = true
                         login_button.isClickable = true
 
-                        // val response_name = it.body()?.name
-                        // val response_name = email
+                        val response_name = it.body()!!.name
+                        val response_email = email
 
+                        //Add user the local database
+                        val userViewModel: LocalViewModel = ViewModelProvider(this).get(LocalViewModel::class.java)
+
+                        val user = User(0, response_name, response_email)
+                        userViewModel.addUser(user)
+
+                        intent.putExtra("response_email",response_email)
                         startActivity(intent)
                         finish()
 

@@ -1,14 +1,18 @@
 package com.example.getsocialandroid.cards
 
+import android.app.Activity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.getsocialandroid.MainPage
 import com.example.getsocialandroid.R
+import com.example.getsocialandroid.localdb.LocalViewModel
+import com.example.getsocialandroid.localdb.RestDb
 import com.google.android.material.snackbar.Snackbar
 
 class RestAdapter (private val restList: MutableList<Rest>, private val listener: MainPage) : RecyclerView.Adapter<RestAdapter.RestViewHolder>()
@@ -58,13 +62,14 @@ class RestAdapter (private val restList: MutableList<Rest>, private val listener
 
     }
 
-    fun removeItem(viewHolder: RecyclerView.ViewHolder)
+    fun removeItem(viewHolder: RecyclerView.ViewHolder, id: Int, localViewModel: LocalViewModel)
     {
         removedPosition = viewHolder.adapterPosition
         removedItem = restList[viewHolder.adapterPosition]
 
         restList.removeAt(viewHolder.adapterPosition)
         notifyItemRemoved(viewHolder.adapterPosition)
+        notifyDataSetChanged()
 
         Snackbar.make(viewHolder.itemView, "${removedItem.restaurant_name} deleted.", Snackbar.LENGTH_LONG).setAction("UNDO"){
             restList.add(removedPosition, removedItem)

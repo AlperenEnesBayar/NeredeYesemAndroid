@@ -11,7 +11,7 @@ class Repository {
         return RetrofitInstance.api.getPUserByID(userId)
     }
 
-    suspend fun login(loginParams: LoginParams): Response<ResponseCode>
+    suspend fun login(loginParams: LoginParams): Response<ResponseLogin>
     {
         return RetrofitInstance.api.login(loginParams)
     }
@@ -24,5 +24,10 @@ class Repository {
     suspend fun getRest(restParams: getRestParams): Response<ResponseRest>
     {
         return RetrofitInstance.api.get_rest(restParams)
+    }
+
+    suspend fun getRestid(restParams: getRestParams2): Response<ResponseRest2>
+    {
+        return RetrofitInstance.api.get_rest_id(restParams)
     }
 }

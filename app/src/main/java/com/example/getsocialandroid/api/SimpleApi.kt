@@ -15,7 +15,7 @@ interface SimpleApi
     @POST("login.php")
     suspend fun login(
             @Body loginParams: LoginParams
-    ): Response<ResponseCode>
+    ): Response<ResponseLogin>
 
     @POST("register.php")
     suspend fun register(
@@ -26,5 +26,10 @@ interface SimpleApi
     suspend fun get_rest(
             @Body getRestParams: getRestParams
     ): Response<ResponseRest>
+
+    @POST("get_rest_id.php")
+    suspend fun get_rest_id(
+        @Body getRestParams: getRestParams2
+    ): Response<ResponseRest2>
 
 }

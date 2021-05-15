@@ -2,6 +2,8 @@ package com.example.getsocialandroid.cards
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.getsocialandroid.model.Adress
 import com.example.getsocialandroid.model.Menu
 

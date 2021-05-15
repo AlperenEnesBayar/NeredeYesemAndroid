@@ -11,9 +11,10 @@ import retrofit2.Response
 class MainViewModel(private val repository: Repository): ViewModel() {
 
     val myResponse: MutableLiveData<Response<Post>> = MutableLiveData()
-    val loginResponse: MutableLiveData<Response<ResponseCode>> = MutableLiveData()
+    val loginResponse: MutableLiveData<Response<ResponseLogin>> = MutableLiveData()
     val registerResponse: MutableLiveData<Response<ResponseCode>> = MutableLiveData()
     val restResponse: MutableLiveData<Response<ResponseRest>> = MutableLiveData()
+    val restidResponse: MutableLiveData<Response<ResponseRest2>> = MutableLiveData()
 
     fun getPUserByID(userID: Int)
     {
@@ -44,6 +45,14 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response = repository.getRest(restParams)
             restResponse.value = response
+        }
+    }
+
+    fun getRestid(restParams: getRestParams2)
+    {
+        viewModelScope.launch {
+            val response = repository.getRestid(restParams)
+            restidResponse.value = response
         }
     }
 }
