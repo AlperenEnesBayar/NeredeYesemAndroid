@@ -133,7 +133,7 @@ class MainPage : AppCompatActivity(),
             //Add user the local database
             val userViewModel: LocalViewModel = ViewModelProvider(this).get(LocalViewModel::class.java)
             lifecycleScope.launch {
-                userViewModel.addRest(RestDb(0,current_rest.restaurant_id))
+                userViewModel.addRest(RestDb(current_rest.restaurant_id!!,current_rest.restaurant_name, current_rest.restaurant_phone, current_rest.cuisines[0],current_rest.address.formatted))
             }
 
         }

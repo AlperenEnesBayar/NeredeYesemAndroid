@@ -24,19 +24,20 @@ import com.example.getsocialandroid.MainViewModelFactory
 import com.example.getsocialandroid.R
 import com.example.getsocialandroid.cards.Rest
 import com.example.getsocialandroid.cards.RestAdapter
+import com.example.getsocialandroid.cards.RestDbAdapter
 import com.example.getsocialandroid.localdb.LocalViewModel
 import com.example.getsocialandroid.localdb.RestDb
 import com.example.getsocialandroid.localdb.User
 import com.example.getsocialandroid.model.*
 import com.example.getsocialandroid.repository.Repository
+import okhttp3.internal.notify
 
 
 class ProfileFragment : Fragment()
 {
 
-    private val restList: ArrayList<Rest> = ArrayList()
-    private val restIds: ArrayList<Int> = ArrayList()
-    val adapter_rest = RestAdapter(restList, MainPage())
+    private val restList: ArrayList<RestDb> = ArrayList()
+    val adapter_rest = RestDbAdapter(restList, MainPage())
     private  lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
@@ -81,8 +82,11 @@ class ProfileFragment : Fragment()
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 //                (rv_rest.adapter as RestAdapter).removeItem(viewHolder, restIds[viewHolder.adapterPosition], localViewModel)
-                localViewModel.deleteRest(RestDb(0, restList[viewHolder.adapterPosition].restaurant_id))
-                load_everything(localViewModel)
+                val rsl = restList[viewHolder.adapterPosition]
+                localViewModel.deleteRest(RestDb(rsl.restaurant_id, rsl.restaurant_name, rsl.restaurant_phone, rsl.address, rsl.cuisines))
+                adapter_rest.notifyItemRemoved(viewHolder.adapterPosition)
+//                adapter_rest.notifyItemRemoved(viewHolder.adapterPosition)
+//                load_everything(localViewModel)
             }
 
             override fun onChildDraw(
@@ -138,7 +142,6 @@ class ProfileFragment : Fragment()
     fun load_everything(localViewModel: LocalViewModel)
     {
         restList.clear()
-        restIds.clear()
         adapter_rest.notifyDataSetChanged()
 
         localViewModel.readRest().observe(viewLifecycleOwner, Observer { its ->
@@ -148,21 +151,9 @@ class ProfileFragment : Fragment()
 
             for (iss in its)
             {
-                restIds.add(iss.ID)
-                viewModel.getRestid(getRestParams2(iss.rest_id!!))
+                restList.add(RestDb(iss.restaurant_id, iss.restaurant_name, iss.restaurant_phone,iss.address, iss.cuisines))
+                adapter_rest.notifyDataSetChanged()
             }
-
-            viewModel.restidResponse.observe(viewLifecycleOwner, Observer {
-                if (it.isSuccessful)
-                {
-                    restList.add(Rest(it.body()?.data?.restaurant_id, it.body()?.data?.restaurant_name, it.body()?.data?.restaurant_phone,
-                        it.body()?.data?.cuisines!!,
-                        it.body()?.data?.address!!,
-                        it.body()?.data?.menus!!, false))
-//                        adapter_rest.notifyItemInserted(restList.size-1)
-                    adapter_rest.notifyDataSetChanged()
-                }
-            })
 
         })
     }
